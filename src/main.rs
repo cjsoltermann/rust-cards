@@ -103,35 +103,39 @@ impl Hand {
         hand
     }
 
+    fn display_row(row: &[Card]) {
+        for _ in 0..row.len() {
+            print!("┌─────┐");
+        }
+        print!("\n");
+        for card in row.iter() {
+            let rank = card.get_rank();
+            let rank2 = if rank == '1' { '0' } else { ' ' };
+            print!("│{}{}   │", rank, rank2);
+        }
+        print!("\n");
+        for card in row.iter() {
+            print!("│  {}  │", card.get_suit());
+        }
+        print!("\n");
+        for card in row.iter() {
+            let (rank, rank2) = match card.get_rank() {
+                '1' => ('1', '0'),
+                n => (' ', n),
+            };
+            print!("│   {}{}│", rank, rank2);
+        }
+        print!("\n");
+        for _ in 0..row.len() {
+            print!("└─────┘");
+        }
+        print!("\n");
+    }
+
     fn display(&self) {
         print!("{}[2J", 27 as char);
         for row in self.cards.chunks(7) {
-            for _ in 0..row.len() {
-                print!("┌─────┐");
-            }
-            print!("\n");
-            for card in row.iter() {
-                let rank = card.get_rank();
-                let rank2 = if rank == '1' { '0' } else { ' ' };
-                print!("│{}{}   │", rank, rank2);
-            }
-            print!("\n");
-            for card in row.iter() {
-                print!("│  {}  │", card.get_suit());
-            }
-            print!("\n");
-            for card in row.iter() {
-                let (rank, rank2) = match card.get_rank() {
-                    '1' => ('1', '0'),
-                    n => (' ', n),
-                };
-                print!("│   {}{}│", rank, rank2);
-            }
-            print!("\n");
-            for _ in 0..row.len() {
-                print!("└─────┘");
-            }
-            print!("\n");
+            Hand::display_row(row);
         }
     }
 }
