@@ -134,8 +134,12 @@ impl Hand {
 
     fn display(&self) {
         print!("{}[2J", 27 as char);
-        for row in self.cards.chunks(7) {
+        for (i, row) in self.cards.chunks(7).enumerate() {
             Hand::display_row(row);
+            for j in i*7..(i+1)*7 {
+                print!("   {}   ", j);
+            }
+            print!("\n");
         }
     }
 }
